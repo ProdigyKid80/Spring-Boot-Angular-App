@@ -1,0 +1,80 @@
+<p-card class="card">
+  <h1>{{ this.title }}</h1>
+  <div class="search">
+    <span class="p-float-label p-input-filled p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        id="float-input"
+        type="text"
+        (input)="dt.filterGlobal(getEventValue($event), 'contains')"
+        pInputText
+      />
+      <label for="float-input">Search keyword</label>
+    </span>
+    <button pButton type="button" label="Add" (click)="addCustomer()"></button>
+  </div>
+  <p-dialog header="{{ this.dialogTitle }}" [(visible)]="display">
+    <!-- Child component DIALOG html -->
+    <app-dialog
+      [customer]="customer"
+      [isDisabled]="isDisabled"
+      [nextId]="nextId"
+      (customerEvent)="addNewCustomer($event)"
+    ></app-dialog>
+  </p-dialog>
+  <div class="mb-3">
+    <p-button
+      type="button"
+      icon="pi pi-chevron-left"
+      (click)="prev()"
+      [disabled]="isFirstPage()"
+      styleClass="p-button-text"
+    ></p-button>
+    <p-button
+      type="button"
+      icon="pi pi-refresh"
+      (click)="reset()"
+      styleClass="p-button-text"
+    ></p-button>
+    <p-button
+      type="button"
+      icon="pi pi-chevron-right"
+      (click)="next()"
+      [disabled]="isLastPage()"
+      styleClass="p-button-text"
+    ></p-button>
+  </div>
+  <p-table
+    #dt
+    [value]="customers"
+    [paginator]="true"
+    [rows]="rows"
+    [showCurrentPageReport]="true"
+    [(first)]="first"
+    responsiveLayout="scroll"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [globalFilterFields]="['name', 'surname', 'dob', 'phone', 'email']"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Birth date</th>
+        <th>Telephone number</th>
+        <th>E-mail</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer let-rowData>
+      <tr (click)="showCustomer(rowData)">
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.surname }}</td>
+        <td>{{ customer.dob }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.email }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

@@ -1,0 +1,16 @@
+fieldset {
+  border: none;
+
+  .p-inputtext {
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  .p-error {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.p-fluid .p-button {
+  float: right;
+  width: auto;
+}
